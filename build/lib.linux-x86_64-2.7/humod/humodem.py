@@ -181,7 +181,7 @@ class ModemPort(serial.Serial):
             # Append only related data (starting with "command" contents).
             if command:
                 if input_line.startswith(command):
-                    prefix_length = len(command) + 2
+                    prefix_length = len(command)+2
                     data.append(input_line[prefix_length:])
             else:
                 # Append only non-empty data.
@@ -249,7 +249,6 @@ class Modem(atc.SetCommands, atc.GetCommands, atc.ShowCommands,
         # Modem is not connected if _pppd_pid is set to None.
         if not self._pppd_pid:
             data_port = self.data_port
-            #TODO: need to make sure this open after it closes.
             data_port.isOpen()
             data_port.write(b'ATZ\r\n')
             data_port.return_data()

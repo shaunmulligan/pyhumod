@@ -250,9 +250,15 @@ class Modem(atc.SetCommands, atc.GetCommands, atc.ShowCommands,
         if not self._pppd_pid:
             data_port = self.data_port
             #TODO: need to make sure this open after it closes.
-            data_port.isOpen()
-            data_port.write(b'ATZ\r\n')
-            data_port.return_data()
+            if (data_port.isOpen()):
+                data_port.write(b'ATZ\r\n')
+                data_port.return_data()
+                print('modem link already open...')
+            else:
+                data_port.open()
+                data_port.write(b'ATZ\r\n')
+                data_port.return_data()
+                print('Opening modem link...')
             if not dialtone_check:
                 data_port.write(b'ATX3\r\n')
                 data_port.return_data()
